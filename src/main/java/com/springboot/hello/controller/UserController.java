@@ -2,40 +2,44 @@ package com.springboot.hello.controller;
 
 import com.springboot.hello.dao.UserDao;
 import com.springboot.hello.domain.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.sql.SQLException;
-
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
 public class UserController {
     private final UserDao userDao;
 
     public UserController(UserDao userDao) {
         this.userDao = userDao;
     }
-
-    @GetMapping("/")
-    public String hello() {
-        return "Hello World";
+    @PostMapping("/user-add")
+    public ResponseEntity<String> addUser(User user) {
+        int result = userDao.addUser(user);
+        if(result >= 1) {
+            return new ResponseEntity<>(user.toString(), HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<>("생성 실패", HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @GetMapping("/user")
-    public User addAndGet(User user) throws SQLException {
-        userDao.add(user);
-        return userDao.findById("1");
+    @DeleteMapping("/delete-all")
+    public ResponseEntity<String> deleteAll()   {
+        int result = userDao.deleteAll();
+        if(result >= 1) {
+            return new ResponseEntity<>("전체삭제 성공",HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("전체삭제 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
-
-    @DeleteMapping("/user/user")
-    public ResponseEntity<Integer> deleteAll() {
-        return ResponseEntity
-                .ok()
-                .body(userDao.deleteAll());
+    @DeleteMapping("/delete-user")
+    public ResponseEntity<String> deleteUser(@RequestParam String id) {
+        int result = userDao.deleteUser(id);
+        if(result == 1) {
+            return new ResponseEntity<>("id : " + id + "삭제 성공",HttpStatus.OK);
+        }else {
+            return new ResponseEntity<>("삭제 실패",HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
