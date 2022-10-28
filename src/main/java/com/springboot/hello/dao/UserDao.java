@@ -22,7 +22,6 @@ public class UserDao {
         this.jebcTemplete = jdbcTemplate;
     }
 
-
     public void add(User user) {
         this.jebcTemplete.update("insert into users(id, name, password) values (?,?,?)",
                 user.getId(), user.getName(), user.getPassword());
@@ -55,5 +54,6 @@ public class UserDao {
 
         return user;
     }
+
 }
 

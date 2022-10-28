@@ -26,12 +26,13 @@ public class UserController {
     }
 
     @GetMapping("/user")
-    public User addAndGet() throws SQLException {
-        userDao.add(new User("1", "Tageun", "0525"));
+    public User addAndGet(User user) throws SQLException {
+        userDao.add(user);
         return userDao.findById("1");
     }
 
-    @DeleteMapping("/user")
+
+    @DeleteMapping("/user/user")
     public ResponseEntity<Integer> deleteAll() {
         return ResponseEntity
                 .ok()
