@@ -36,9 +36,9 @@ public class HospitalDao {
                 "?,?,?," +
                 "?,?,?," +
                 "?);";
-        this.jdbcTemplate.update(sql,hospital.getId(), hospital.getOpenServiceName(), hospital.getOpenLocalGovernmentCode(),
+        this.jdbcTemplate.update(sql, hospital.getId(), hospital.getOpenServiceName(), hospital.getOpenLocalGovernmentCode(),
                 hospital.getManagementNumber(), hospital.getLicenseData(), hospital.getBusinessStatus(),
-                hospital.getBusinessStatusCode(), hospital.getPhone(),hospital.getFullAddress(),
+                hospital.getBusinessStatusCode(), hospital.getPhone(), hospital.getFullAddress(),
                 hospital.getRoadNameAddress(), hospital.getHospitalName(), hospital.getBusinessTypeName(),
                 hospital.getHealthcareProviderCount(), hospital.getPatientRoomCount(), hospital.getTotalNumberOfBeds(),
                 hospital.getTotalAreaSize()
@@ -46,5 +46,9 @@ public class HospitalDao {
 
     }
 
+    public int getCountHospital() {
+        String sql = "select count(id) from nation_wide_hospitals;";
+        return this.jdbcTemplate.queryForObject(sql, Integer.class);
+    }
 }
 
