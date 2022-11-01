@@ -1,5 +1,6 @@
 package com.springboot.hello.parser;
 
+import com.springboot.hello.dao.HospitalDao;
 import com.springboot.hello.domain.Hospital;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -21,6 +22,18 @@ class HospitalParserTest {
     @Autowired
     ReadLineContext<Hospital> hospitalReadLineContext; //아래처럼 new를 하지 않아도 SpringBootTest가 Autowired에 적용된 곳에 Bean을 찾아 적용해준다.
     //ReadLineContext<Hospital> hospitalReadLineContext = new ParserFactory().hospitalReadLineContext();
+
+    @Autowired //HospitalDao는 Factory도 없는데 왜 DI가 되는것인가 -> @COMPONET가 다해줌ㅋ
+    HospitalDao hospitalDao;
+
+    @Test
+    @DisplayName("Hospital이 insert가 잘되는지")
+    void name() {
+        HospitalParser hp = new HospitalParser();
+        Hospital hospital = hp.parse(line1);
+        hospitalDao.addHospital(hospital);
+        //get이 없어서 assert는 눈으로합니다
+    }
     @Test
     @DisplayName("10만건 이상 데이터가 파싱되는지")
     void oneHundread() throws IOException {
