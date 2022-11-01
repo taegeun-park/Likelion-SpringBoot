@@ -29,20 +29,24 @@ class HospitalParserTest {
     HospitalDao hospitalDao;
 
     @Test
-    @DisplayName("Hospital이 insert가 잘되는지")
+    @DisplayName("HospitalDao가 잘되는지")
     void name() {
         HospitalParser hp = new HospitalParser();
-        Hospital hospital = hp.parse(line3);
-        hospitalDao.addHospital(hospital);
+        hospitalDao.deleteAllHospital();
+        Hospital hospital1 = hp.parse(line1);
+        Hospital hospital2 = hp.parse(line2);
+        Hospital hospital3 = hp.parse(line3);
+        hospitalDao.addHospital(hospital1);
+        hospitalDao.addHospital(hospital2);
+        hospitalDao.addHospital(hospital3);
+        hospitalDao.deleteHospital(1);
+        assertEquals(2,hospitalDao.getCountHospital());
+
         //get이 없어서 assert는 눈으로합니다
         //findById, deleteAll, getCount 제작
     }
 
-    @Test
-    @DisplayName("GetCount가 잘되는지 확인")
-    void getCountHospital(){
-        assertEquals(3,hospitalDao.getCountHospital());
-    }
+
     @Test
     @DisplayName("10만건 이상 데이터가 파싱되는지")
     void oneHundread() throws IOException {

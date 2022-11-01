@@ -50,5 +50,14 @@ public class HospitalDao {
         String sql = "select count(id) from nation_wide_hospitals;";
         return this.jdbcTemplate.queryForObject(sql, Integer.class);
     }
+
+    public void deleteHospital(int id) {
+        this.jdbcTemplate.update("delete from nation_wide_hospitals where id=?", id);
+    }
+
+    public void deleteAllHospital() {
+        this.jdbcTemplate.update("delete from nation_wide_hospitals;");
+    }
+
 }
 
