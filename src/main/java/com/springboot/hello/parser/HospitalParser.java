@@ -10,6 +10,25 @@ public class HospitalParser implements Parser<Hospital>{
         String[] row = str.split("\",\"");
         Hospital hospital = new Hospital();
 
+
+        //1, Id()); // col:0
+//"의원", OpenServiceName());//col:1
+//3620000,OpenLocalGovernmentCode()); // col: 3
+//"PHMA119993620020041100004",ManagementNumber()); // col:4
+//LocalDateTime.of(1999, 6, 12, 0, 0, 0), LicenseDate()); //19990612 //col:5
+//1, BusinessStatus()); //col:7
+//13, BusinessStatusCode());//col:9
+//"062-515-2875", Phone());//col:15
+//"광주광역시 북구 풍향동 565번지 4호 3층", FullAddress()); col:18
+//"광주광역시 북구 동문대로 24, 3층 (풍향동)", RoadNameAddress());//col:19
+//"효치과의원", HospitalName());//col:21
+//"치과의원", BusinessTypeName());//col:25
+//1, HealthcareProviderCount()); //col:29
+//0, PatientRoomCount()); //col:30
+//0, TotalNumberOfBeds()); //col:31
+//52.29, TotalAreaSize()); //col:32
+
+
         //1 .id = 첫번쨰 " 따로처리
         hospital.setId(Integer.parseInt(row[0].replace("\"",""))); // StoI
         //2. 서비스명
