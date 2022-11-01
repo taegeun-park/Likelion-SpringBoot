@@ -30,7 +30,7 @@ class HospitalParserTest {
 
     @Test
     @DisplayName("HospitalDao가 잘되는지")
-    void name() {
+    void addAndGet() {
         HospitalParser hp = new HospitalParser();
         hospitalDao.deleteAllHospital();
         Hospital hospital1 = hp.parse(line1);
@@ -42,8 +42,14 @@ class HospitalParserTest {
         hospitalDao.deleteHospital(1);
         assertEquals(2,hospitalDao.getCountHospital());
 
-        //get이 없어서 assert는 눈으로합니다
-        //findById, deleteAll, getCount 제작
+        Hospital selectedHospital = hospitalDao.findByIdHospital(hospital2.getId());
+        //ID가 제대로 입력됐는지
+        assertEquals(hospital2.getId(),selectedHospital.getId());
+        //날짜가 제대로 입력됐는지
+        assertEquals(selectedHospital.getLicenseData(),hospital2.getLicenseData());
+        //float이 제대로 입력됐는지
+        assertEquals(selectedHospital.getTotalAreaSize(), hospital2.getTotalAreaSize());
+
     }
 
 

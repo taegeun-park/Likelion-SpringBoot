@@ -3,12 +3,22 @@ package com.springboot.hello.dao;
 import com.springboot.hello.domain.Hospital;
 import com.springboot.hello.parser.HospitalParser;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Component;
 
 @Component
 public class HospitalDao {
     private final JdbcTemplate jdbcTemplate;
 
+    RowMapper<Hospital> rowMapper = (rs, rowNum) -> {
+        Hospital hospital = new Hospital();
+        hospital.setId(rs.getInt("id"));
+        hospital.setOpenServiceName(rs.getString("open_service_name"));
+        hospital.setHospitalName(rs.getString("hospital_name"));
+        hospital.setLicenseData(rs.getTimestamp("license_date").toLocalDateTime());
+        hospital.setTotalAreaSize(rs.getFloat("total_area_size"));
+        return hospital;
+    };
 
     public HospitalDao(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
@@ -59,5 +69,8 @@ public class HospitalDao {
         this.jdbcTemplate.update("delete from nation_wide_hospitals;");
     }
 
+    public Hospital findByIdHospital(int id) {
+        return this.jdbcTemplate.queryForObject("select * from nation_wide_hospitals where id = ?",rowMapper,id);
+    }
 }
 
