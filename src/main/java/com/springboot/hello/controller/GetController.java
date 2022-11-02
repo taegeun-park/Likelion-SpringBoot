@@ -16,7 +16,7 @@ public class GetController {
 
     @GetMapping("/name")
     public String getName() {
-        return "Junha";
+        return "taegeun";
     }
 
     @GetMapping("/variable1/{variable}")

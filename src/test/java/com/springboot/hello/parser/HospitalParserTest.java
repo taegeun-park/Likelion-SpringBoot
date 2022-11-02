@@ -2,6 +2,7 @@ package com.springboot.hello.parser;
 
 import com.springboot.hello.dao.HospitalDao;
 import com.springboot.hello.domain.Hospital;
+import com.springboot.hello.service.HospitalService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,27 +29,30 @@ class HospitalParserTest {
     @Autowired //HospitalDao는 Factory도 없는데 왜 DI가 되는것인가 -> @COMPONET가 다해줌ㅋ
     HospitalDao hospitalDao;
 
+    @Autowired
+    HospitalService hospitalService;
+
     @Test
     @DisplayName("HospitalDao가 잘되는지")
     void addAndGet() {
-        HospitalParser hp = new HospitalParser();
-        hospitalDao.deleteAllHospital();
-        Hospital hospital1 = hp.parse(line1);
-        Hospital hospital2 = hp.parse(line2);
-        Hospital hospital3 = hp.parse(line3);
-        hospitalDao.addHospital(hospital1);
-        hospitalDao.addHospital(hospital2);
-        hospitalDao.addHospital(hospital3);
-        hospitalDao.deleteHospital(1);
-        assertEquals(2,hospitalDao.getCountHospital());
-
-        Hospital selectedHospital = hospitalDao.findByIdHospital(hospital2.getId());
-        //ID가 제대로 입력됐는지
-        assertEquals(hospital2.getId(),selectedHospital.getId());
-        //날짜가 제대로 입력됐는지
-        assertEquals(selectedHospital.getLicenseData(),hospital2.getLicenseData());
-        //float이 제대로 입력됐는지
-        assertEquals(selectedHospital.getTotalAreaSize(), hospital2.getTotalAreaSize());
+//        HospitalParser hp = new HospitalParser();
+//        hospitalDao.deleteAllHospital();
+//        Hospital hospital1 = hp.parse(line1);
+//        Hospital hospital2 = hp.parse(line2);
+//        Hospital hospital3 = hp.parse(line3);
+//        hospitalDao.addHospital(hospital1);
+//        hospitalDao.addHospital(hospital2);
+//        hospitalDao.addHospital(hospital3);
+//        hospitalDao.deleteHospital(1);
+//        assertEquals(2, hospitalDao.getCountHospital());
+//
+//        Hospital selectedHospital = hospitalDao.findByIdHospital(hospital2.getId());
+//        //ID가 제대로 입력됐는지
+//        assertEquals(hospital2.getId(), selectedHospital.getId());
+//        //날짜가 제대로 입력됐는지
+//        assertEquals(selectedHospital.getLicenseData(), hospital2.getLicenseData());
+//        //float이 제대로 입력됐는지
+//        assertEquals(selectedHospital.getTotalAreaSize(), hospital2.getTotalAreaSize());
 
     }
 
@@ -56,29 +60,27 @@ class HospitalParserTest {
     @Test
     @DisplayName("10만건 이상 데이터가 파싱되는지")
     void oneHundread() throws IOException {
-        //서버환경에서 build할때 문제가 생길 수 있습니다.
-        //어디에서든지 실행 할 수 있게짜는 것이 목표다.
-        String filename = "C:\\Users\\taege\\git\\hello\\src\\main\\resources\\static\\hospitaldata.csv";
-        List<Hospital> hospitalList = hospitalReadLineContext.readByLine(filename);
-        System.out.printf("파싱된 갯수: %d",hospitalList.size());
-        assertTrue(hospitalList.size() > 1000);
-  //      assertTrue(hospitalList.size() > 100000);
-        for (int i = 0; i < 10; i++) {
-            System.out.println(i+"번째 = " + hospitalList.get(i).getHospitalName());
-        }
-        System.out.printf("파싱된 갯수: %s",hospitalList.size());
+//        //서버환경에서 build할때 문제가 생길 수 있습니다.
+//        //어디에서든지 실행 할 수 있게짜는 것이 목표다.
+//        hospitalDao.deleteAllHospital();
+//        String filename = "C:\\Users\\taege\\git\\hello\\src\\main\\resources\\static\\hospitaldata.csv";
+//        int cnt = this.hospitalService.insertLargeVolumeHospitalData(filename);
+//        assertTrue(cnt > 1000);
+//        assertTrue(cnt > 100000);
+//        System.out.printf("파싱된 데이터 개수 : %d\n", cnt);
     }
+
 
     @Test
     @DisplayName("csv 1줄을 Hospital로 잘 만드는지 Test")
-    void convertToHospital(){
+    void convertToHospital() {
         HospitalParser hp = new HospitalParser();
         Hospital hospital = hp.parse(line1);
         System.out.println(line1);
         assertEquals(1, hospital.getId()); // col:0
         assertEquals("의원", hospital.getOpenServiceName());//col:1
-        assertEquals(3620000,hospital.getOpenLocalGovernmentCode()); // col: 3
-        assertEquals("PHMA119993620020041100004",hospital.getManagementNumber()); // col:4
+        assertEquals(3620001, hospital.getOpenLocalGovernmentCode()); // col: 3
+        assertEquals("PHMA119993620020041100004", hospital.getManagementNumber()); // col:4
         assertEquals(LocalDateTime.of(1999, 6, 12, 0, 0, 0), hospital.getLicenseData()); //19990612 //col:5
         assertEquals(1, hospital.getBusinessStatus()); //col:7
         assertEquals(13, hospital.getBusinessStatusCode());//col:9

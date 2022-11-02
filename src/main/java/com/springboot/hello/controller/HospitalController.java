@@ -5,10 +5,12 @@ import com.springboot.hello.domain.Hospital;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/v1/hospital")
 @Slf4j
 public class HospitalController {
 
@@ -18,7 +20,7 @@ public class HospitalController {
         this.hospitalDao = hospitalDao;
     }
 
-    @PutMapping("/hospital-add")
+    @PutMapping("/add")
     public ResponseEntity<String> addHospital(Hospital hospital) {
         log.info("Hospital-add로 요청이 들어왔습니다.");
         hospitalDao.addHospital(hospital);
@@ -26,4 +28,22 @@ public class HospitalController {
                 .status(HttpStatus.CREATED)
                 .body( "등록되었습니다.");
     }
+/*
+Null을 줄이는 추세 Null 대신 Optional<>
+Optional -> 몇가지 기능을 지원합니다
+1. 비었는지 check
+2. Java 8스타일 기능과 연계
+ */
+    @GetMapping("/{id}")
+    public ResponseEntity<Hospital> get(@PathVariable Integer id) {
+        Hospital hospital = hospitalDao.findByIdHospital(id);
+        Optional<Hospital> opt = Optional.of(hospital);
+
+        if (!opt.isEmpty()) {
+            return ResponseEntity.ok().body(hospital);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Hospital());
+        }
+    }
+
 }

@@ -9,7 +9,6 @@ import java.util.List;
 public class ReadLineContext<T> {
 
     private Parser<T> parser;
-
     public ReadLineContext(Parser<T> parser) {
         this.parser = parser;
     }
