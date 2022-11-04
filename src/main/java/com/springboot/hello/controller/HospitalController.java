@@ -20,14 +20,6 @@ public class HospitalController {
         this.hospitalDao = hospitalDao;
     }
 
-    @PutMapping("/add")
-    public ResponseEntity<String> addHospital(Hospital hospital) {
-        log.info("Hospital-add로 요청이 들어왔습니다.");
-        hospitalDao.addHospital(hospital);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body( "등록되었습니다.");
-    }
 /*
 Null을 줄이는 추세 Null 대신 Optional<>
 Optional -> 몇가지 기능을 지원합니다

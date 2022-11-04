@@ -14,7 +14,6 @@ import java.util.Optional;
 public class HospitalService {
 
     private final ReadLineContext<Hospital> hospitalReadLineContext;
-
     private final HospitalDao hospitalDao;
 
     public HospitalService(ReadLineContext<Hospital> hospitalReadLineContext, HospitalDao hospitalDao) {
@@ -29,7 +28,6 @@ public class HospitalService {
             hospitalList = hospitalReadLineContext.readByLine(filename);
             System.out.println("파싱이 끝났습니다.");
             hospitalList.stream()
-                    .parallel()
                     .forEach(hospital -> {
                         try {
                             this.hospitalDao.addHospital(hospital); // db에 insert하는 구간
