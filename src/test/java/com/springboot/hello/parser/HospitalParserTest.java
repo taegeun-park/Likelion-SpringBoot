@@ -60,38 +60,38 @@ class HospitalParserTest {
     @Test
     @DisplayName("10만건 이상 데이터가 파싱되는지")
     void oneHundread() throws IOException {
-//        //서버환경에서 build할때 문제가 생길 수 있습니다.
-//        //어디에서든지 실행 할 수 있게짜는 것이 목표다.
-//        hospitalDao.deleteAllHospital();
-//        String filename = "C:\\Users\\taege\\git\\hello\\src\\main\\resources\\static\\hospitaldata.csv";
-//        int cnt = this.hospitalService.insertLargeVolumeHospitalData(filename);
-//        assertTrue(cnt > 1000);
-//        assertTrue(cnt > 100000);
-//        System.out.printf("파싱된 데이터 개수 : %d\n", cnt);
+        //서버환경에서 build할때 문제가 생길 수 있습니다.
+        //어디에서든지 실행 할 수 있게짜는 것이 목표다.
+        hospitalDao.deleteAllHospital();
+        String filename = "C:\\Users\\taege\\git\\hello\\src\\main\\resources\\static\\hospitaldata.csv";
+        int cnt = this.hospitalService.insertLargeVolumeHospitalData(filename);
+        assertTrue(cnt > 1000);
+        assertTrue(cnt > 100000);
+        System.out.printf("파싱된 데이터 개수 : %d\n", cnt);
     }
 
 
-    @Test
-    @DisplayName("csv 1줄을 Hospital로 잘 만드는지 Test")
-    void convertToHospital() {
-        HospitalParser hp = new HospitalParser();
-        Hospital hospital = hp.parse(line1);
-        System.out.println(line1);
-        assertEquals(1, hospital.getId()); // col:0
-        assertEquals("의원", hospital.getOpenServiceName());//col:1
-        assertEquals(3620001, hospital.getOpenLocalGovernmentCode()); // col: 3
-        assertEquals("PHMA119993620020041100004", hospital.getManagementNumber()); // col:4
-        assertEquals(LocalDateTime.of(1999, 6, 12, 0, 0, 0), hospital.getLicenseData()); //19990612 //col:5
-        assertEquals(1, hospital.getBusinessStatus()); //col:7
-        assertEquals(13, hospital.getBusinessStatusCode());//col:9
-        assertEquals("062-515-2875", hospital.getPhone());//col:17
-        assertEquals("광주광역시 북구 풍향동 565번지 4호 3층", hospital.getFullAddress()); //col:18
-        assertEquals("광주광역시 북구 동문대로 24, 3층 (풍향동)", hospital.getRoadNameAddress());//col:19
-        assertEquals("효치과의원", hospital.getHospitalName());//col:21
-        assertEquals("치과의원", hospital.getBusinessTypeName());//col:25
-        assertEquals(1, hospital.getHealthcareProviderCount());//col : 30
-        assertEquals(0, hospital.getPatientRoomCount()); //col:31
-        assertEquals(0, hospital.getTotalNumberOfBeds()); //col:32
-        assertEquals(52.29f, hospital.getTotalAreaSize()); //col:33
-    }
+//    @Test
+//    @DisplayName("csv 1줄을 Hospital로 잘 만드는지 Test")
+//    void convertToHospital() {
+//        HospitalParser hp = new HospitalParser();
+//        Hospital hospital = hp.parse(line1);
+//        System.out.println(line1);
+//        assertEquals(1, hospital.getId()); // col:0
+//        assertEquals("의원", hospital.getOpenServiceName());//col:1
+//        assertEquals(3620001, hospital.getOpenLocalGovernmentCode()); // col: 3
+//        assertEquals("PHMA119993620020041100004", hospital.getManagementNumber()); // col:4
+//        assertEquals(LocalDateTime.of(1999, 6, 12, 0, 0, 0), hospital.getLicenseData()); //19990612 //col:5
+//        assertEquals(1, hospital.getBusinessStatus()); //col:7
+//        assertEquals(13, hospital.getBusinessStatusCode());//col:9
+//        assertEquals("062-515-2875", hospital.getPhone());//col:17
+//        assertEquals("광주광역시 북구 풍향동 565번지 4호 3층", hospital.getFullAddress()); //col:18
+//        assertEquals("광주광역시 북구 동문대로 24, 3층 (풍향동)", hospital.getRoadNameAddress());//col:19
+//        assertEquals("효치과의원", hospital.getHospitalName());//col:21
+//        assertEquals("치과의원", hospital.getBusinessTypeName());//col:25
+//        assertEquals(1, hospital.getHealthcareProviderCount());//col : 30
+//        assertEquals(0, hospital.getPatientRoomCount()); //col:31
+//        assertEquals(0, hospital.getTotalNumberOfBeds()); //col:32
+//        assertEquals(52.29f, hospital.getTotalAreaSize()); //col:33
+//    }
 }
