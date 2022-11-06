@@ -8,6 +8,6 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://ec2-15-165-79-89.ap-northeast-2.compute.amazonaws.com:3306/likelion-db
+    url: jdbc:mysql://ec2-15-164-237-10.ap-northeast-2.compute.amazonaws.com:3306/likelion-db
     username: root
     password: password
